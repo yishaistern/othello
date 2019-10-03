@@ -1,5 +1,7 @@
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
+import { AppState } from './reducers';
+import { createSelector } from '@ngrx/store';
 
 export interface RouterStateUrl {
   url: string;
@@ -26,3 +28,13 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     return { url, params, queryParams };
   }
 }
+
+export const selectRouter = (state: AppState) => state.router;
+export const selectPathUrl = createSelector(
+    selectRouter,
+    (router: any) => {
+        console.log(router);
+        const ans = (router && router.state && router.state.url) ? (router.state.url as string).substring(1) : '';
+        return ans;
+    }
+  );
