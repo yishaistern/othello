@@ -1,5 +1,6 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action, createSelector } from '@ngrx/store';
 import * as authActions from '../auth.actions';
+import { AppState } from './reducers';
 export interface User {
     userName: string;
 }
@@ -35,3 +36,18 @@ const _counterReducer = createReducer(initialState,
 export function counterReducer(state: UsersState | undefined, action: Action) {
     return _counterReducer(state, action);
 }
+
+export const selectUsers = (state: AppState) => state.users;
+export const selectAllUsers = createSelector(
+    selectUsers,
+    (router: UsersState): UsersState => {
+        return router;
+    }
+  );
+
+export const selectUserById = createSelector(
+    selectUsers,
+    (router: UsersState, id: string): User => {
+        return router[id];
+    }
+  );

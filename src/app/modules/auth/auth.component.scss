@@ -1,0 +1,13 @@
+footer {
+    box-sizing: border-box;
+    position: fixed;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e1e1e1;
+    z-index: 10;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
