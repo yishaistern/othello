@@ -1,5 +1,5 @@
 <div class="login-box">
-    <div [ngClass]="{'alert-primary': !((user$ | async).userName)}" class="alert no-radus" role="alert">
+    <div [ngClass]="{'alert-primary': !((user$ | async).userName), 'alert-success': ((user$ | async).userName)}" class="alert no-radus" role="alert">
         <ng-container *ngIf="!((user$ | async).userName); else elseBlock">
             Log In User Or Sgin New
         </ng-container>
@@ -8,7 +8,7 @@
         </ng-template>
     </div>
     <div>
-        <form>
+        <form *ngIf="!((user$ | async).userName)">
             <div class="form-group">
                 <label for="exampleInputEmail1">User Name</label>
                 <input type="text" [(ngModel)]="userInput.userName" [ngModelOptions]="{standalone: true}" class="form-control"  placeholder="Enter name">

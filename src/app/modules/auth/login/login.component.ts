@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.http.post('http://localhost:4005/login', this.userInput).subscribe((data: any) => {
       console.log(data);
       if (data.status && data.status.code === 0) {
-        this.store.dispatch(loginSuccess({ user: { userName: this.user.userName, userid: this.userId }}));
+        this.store.dispatch(loginSuccess({ user: { userName: this.userInput.userName, userid: this.userId }}));
       }
     });
   }
