@@ -4,6 +4,7 @@ import { AppState } from '../../../store/reducers/reducers';
 import { Observable, Subscription } from 'rxjs';
 import { User, selectUserById, UserLoginPayload } from '../../../store/reducers/auth.reducer';
 import { HttpClient } from '@angular/common/http';
+import { loginSuccess } from 'src/app/store/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http.post('http://localhost:4005/login', this.userInput).subscribe(data => {
+    this.http.post('http://localhost:4005/login', this.userInput).subscribe((data: any) => {
       console.log(data);
+      if (data.status && data.status.code === 0) {
+        this.store.dispatch(loginSuccess({ user: { userName: this.user.userName, userid: this.userId }}));
+      }
     });
   }
 

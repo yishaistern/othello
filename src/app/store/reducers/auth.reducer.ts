@@ -9,8 +9,7 @@ export interface UserLoginPayload {
     password: string;
 }
 export interface LoginAction {
-    userName: string;
-    userid: string;
+    userName: string; userid: string;
 }
 export interface UsersState {
     user1: User;
