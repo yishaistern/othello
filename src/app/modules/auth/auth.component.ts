@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-
+  public users = [
+    {
+      id: 'user1',
+    }, {
+      id: 'user2',
+    }
+  ];
   constructor() { }
 
   ngOnInit() {

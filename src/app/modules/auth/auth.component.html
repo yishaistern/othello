@@ -1,7 +1,5 @@
 <div class="log-wrap">
-    <app-login></app-login>
-    <app-login></app-login>    
+    <ng-container *ngFor="let user of users">
+        <app-login [userId]="user.id"></app-login>
+    </ng-container>
 </div>
-<footer>
-    <button type="button" class="btn btn-primary" (click)="reset()">Sign Up</button>
-</footer>
