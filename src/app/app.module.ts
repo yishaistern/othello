@@ -12,6 +12,7 @@ import { CustomSerializer } from './store/reducers/route-serializer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer
@@ -28,8 +30,10 @@ import { HeaderComponent } from './components/header/header.component';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    // HttpClientModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

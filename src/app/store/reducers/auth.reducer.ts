@@ -4,6 +4,10 @@ import { AppState } from './reducers';
 export interface User {
     userName: string;
 }
+export interface UserLoginPayload {
+    userName: string;
+    password: string;
+}
 export interface LoginAction {
     userName: string;
     userid: string;
