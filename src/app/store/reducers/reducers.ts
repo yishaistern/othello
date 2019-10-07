@@ -1,10 +1,10 @@
 import { routerReducer } from '@ngrx/router-store';
 import { ActionReducerMap, State } from '@ngrx/store';
-import { counterReducer } from './auth.reducer';
+import { counterReducer, UsersState } from './auth.reducer';
 
 export interface AppState {
     router: any;
-    users: any;
+    users: UsersState;
   }
 
 export const reducers: ActionReducerMap<any> = {

@@ -1,4 +1,4 @@
-import { createReducer, on, Action, createSelector } from '@ngrx/store';
+import { createReducer, on, Action, createSelector, createFeatureSelector } from '@ngrx/store';
 import * as authActions from '../auth.actions';
 import { AppState } from './reducers';
 export interface User {
@@ -29,18 +29,22 @@ function assginUser(users, userId, userNmae): any {
     return users;
 }
 
-const _counterReducer = createReducer(initialState,
+const counterrReducer = createReducer(initialState,
     on(authActions.loginSuccess, (state, {user} ) =>  {
-        return {...state, users: assginUser(state, user.userid, user.userName)};
+        return assginUser(state, user.userid, user.userName);
+    }),
+    on(authActions.sginSuccess, (state, {user} ) =>  {
+        return assginUser(state, user.userid, user.userName);
     }),
 );
 
 
 export function counterReducer(state: UsersState | undefined, action: Action) {
-    return _counterReducer(state, action);
+    return counterrReducer(state, action);
 }
 
-export const selectUsers = (state: AppState) => state.users;
+export const usersKey = 'users';
+export const selectUsers = createFeatureSelector<AppState, UsersState>(usersKey);
 export const selectAllUsers = createSelector(
     selectUsers,
     (router: UsersState): UsersState => {
@@ -54,3 +58,11 @@ export const selectUserById = createSelector(
         return router[id];
     }
   );
+export const selectUsersss = (state: AppState) => state.users;
+export const areBothLooged = createSelector(
+    selectUsersss,
+  (router: UsersState, allready: boolean): boolean => {
+      const bool = (router.user1.userName && router.user2.userName && allready) ? true : false;
+      return bool;
+  }
+);

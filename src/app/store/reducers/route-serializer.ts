@@ -38,3 +38,19 @@ export const selectPathUrl = createSelector(
         return ans;
     }
   );
+
+export const selectRouteParams = createSelector(
+  selectRouter,
+  (router: any) => {
+      const ans = (router && router.state && router.state.params) ? (router.state.params) : {};
+      return ans;
+  }
+);
+
+export const selectRouteParam = createSelector(
+  selectRouter,
+  (router: any, key: string) => {
+      const ans = (router && router.state && router.state.params) ? (router.state.params[key]) : null;
+      return ans;
+  }
+);

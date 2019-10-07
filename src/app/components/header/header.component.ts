@@ -3,6 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/reducers/reducers';
 import { Observable, Subscription } from 'rxjs';
 import { selectPathUrl } from '../../store/reducers/route-serializer';
+import { areBothLooged } from 'src/app/store/reducers/auth.reducer';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +12,11 @@ import { selectPathUrl } from '../../store/reducers/route-serializer';
 })
 export class HeaderComponent implements OnInit {
   path$: Observable<string>;
-  path: string = '';
+  path: string;
   pathsub: Subscription;
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {
+    this.path = '';
+   }
 
   ngOnInit() {
     this.path$ = this.store.pipe(select(selectPathUrl));
