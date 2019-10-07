@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { User, selectUserById, UserLoginPayload } from '../../../store/reducers/auth.reducer';
 import { HttpClient } from '@angular/common/http';
 import { loginSuccess } from 'src/app/store/auth.actions';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     password: '',
     userName: ''
   };
-  constructor(private store: Store<AppState>,  private http: HttpClient) {
+  constructor(private store: Store<AppState>,  private http: HttpClient, private route: Router) {
 
   }
 
@@ -36,5 +37,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
+  sign() {
+    this.route.navigate(['/auth/signUp', this.userId]);
+  }
 }
