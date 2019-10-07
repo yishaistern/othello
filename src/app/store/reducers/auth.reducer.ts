@@ -1,4 +1,4 @@
-import { createReducer, on, Action, createSelector, createFeatureSelector } from '@ngrx/store';
+import { createReducer, on, Action, createSelector, createFeatureSelector, props } from '@ngrx/store';
 import * as authActions from '../auth.actions';
 import { AppState } from './reducers';
 export interface User {
@@ -24,20 +24,23 @@ export const initialState: UsersState = {
     }
 };
 
-function assginUser(users, userId, userNmae): any {
-    users[userId].userName = userNmae;
-    return users;
+function assginUser(prop, user, userId, userNmae): any {
+    if (prop === userId) {
+        return { userName: userNmae};
+    } else {
+        return user;
+    }
 }
 
 const counterrReducer = createReducer(initialState,
-    on(authActions.loginSuccess, (state, {user} ) =>  {
-        return assginUser(state, user.userid, user.userName);
-    }),
-    on(authActions.sginSuccess, (state, {user} ) =>  {
-        return assginUser(state, user.userid, user.userName);
-    }),
+    on(authActions.loginSuccess, (state, {user} ) => ({...state, user1 : { userName: 'sds'}})),
+    on(authActions.sginSuccess, (state, {user} ) =>  ({
+        ...state,
+        user1 : assginUser('user1', state.user1, user.userid, user.userName),
+        user2 : assginUser('user2', state.user2, user.userid, user.userName)
+    })),
 );
-
+// assginUser(state, user.userid, user.userName))
 
 export function counterReducer(state: UsersState | undefined, action: Action) {
     return counterrReducer(state, action);
