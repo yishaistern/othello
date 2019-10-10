@@ -18,7 +18,7 @@ export class SginUpComponent implements OnInit {
   paramsSub: Subscription;
   navSub: Subscription;
   userId: string = 'user2';
-  tt: Observable<UsersState>;
+  tt: Observable<boolean>;
   afterSin = false;
   constructor(
     private store: Store<AppState>,
@@ -34,19 +34,21 @@ export class SginUpComponent implements OnInit {
     this.paramsSub = this.store.pipe(select(selectRouteParam, 'userId')).subscribe((data: string) => {
       this.userId = data;
     });
-    this.tt = this.store.pipe(select(selectAllUsers));
-    console.log(this.tt);
-    this.navSub = this.tt.subscribe((data: UsersState) => {
-      console.log(data);
+    this.tt = this.store.pipe(select(areBothLooged));
+    this.navSub = this.tt.subscribe((data: boolean) => {
+      if (this.afterSin) {
+        const navroute = (data) ? ['game'] : ['auth'];
+        this.route.navigate(navroute);
+      }
     });
-    
+
   }
   sign() {
     this.http.post('http://localhost:4005/singUp', this.userInput).subscribe((data: any) => {
       if (data.status && data.status.code === 0) {
         this.afterSin = true;
         this.toastr.success(`${this.userInput.userName} logged`);
-        
+
         this.store.dispatch(sginSuccess({ user: { userName: this.userInput.userName, userid: this.userId }}));
       } else if (data.status && data.status.code === -1) {
         this.toastr.error('User exsites');

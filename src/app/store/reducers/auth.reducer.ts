@@ -33,7 +33,11 @@ function assginUser(prop, user, userId, userNmae): any {
 }
 
 const counterrReducer = createReducer(initialState,
-    on(authActions.loginSuccess, (state, {user} ) => ({...state, user1 : { userName: 'sds'}})),
+    on(authActions.loginSuccess, (state, {user} ) => ({
+        ...state,
+        user1 : assginUser('user1', state.user1, user.userid, user.userName),
+        user2 : assginUser('user2', state.user2, user.userid, user.userName)
+    })),
     on(authActions.sginSuccess, (state, {user} ) =>  ({
         ...state,
         user1 : assginUser('user1', state.user1, user.userid, user.userName),
@@ -62,10 +66,14 @@ export const selectUserById = createSelector(
     }
   );
 export const selectUsersss = (state: AppState) => state.users;
+let ttt = true;
 export const areBothLooged = createSelector(
     selectUsersss,
-  (router: UsersState, allready: boolean): boolean => {
-      const bool = (router.user1.userName && router.user2.userName && allready) ? true : false;
-      return bool;
+  (router: UsersState): boolean => {
+    ttt = !ttt;
+    // console.log(router.user1.userName, router.user2.userName);
+    // const bool = (router.user1.userName && router.user2.userName) ? true : false;
+    // return bool;
+    return ttt;
   }
 );
