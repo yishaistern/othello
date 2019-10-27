@@ -3,3 +3,7 @@
     <div style="line-height: 50px;font-size: 8px;">{{ path$ | async }}</div>
     <div class="middle">Welcome To Othello</div>
 </header>
+<header class="auth-header" *ngIf="path.indexOf('game') !== -1">
+    <div style="line-height: 50px;font-size: 8px;">{{ path$ | async }}</div>
+    <div class="middle">Lets play</div>
+</header>
