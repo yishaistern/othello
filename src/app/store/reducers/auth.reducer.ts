@@ -66,14 +66,11 @@ export const selectUserById = createSelector(
     }
   );
 export const selectUsersss = (state: AppState) => state.users;
-let ttt = true;
+
 export const areBothLooged = createSelector(
     selectUsersss,
   (router: UsersState): boolean => {
-    ttt = !ttt;
-    // console.log(router.user1.userName, router.user2.userName);
-    // const bool = (router.user1.userName && router.user2.userName) ? true : false;
-    // return bool;
-    return ttt;
+    const bool = (router.user1.userName && router.user2.userName) ? true : false;
+    return bool;
   }
 );

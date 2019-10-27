@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserLoginPayload, areBothLooged, selectAllUsers, UsersState } from '../../../store/reducers/auth.reducer';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/reducers/reducers';
@@ -14,11 +14,10 @@ import { selectRouteParam } from '../../../store/reducers/route-serializer';
   templateUrl: './sgin-up.component.html',
   styleUrls: ['./sgin-up.component.scss']
 })
-export class SginUpComponent implements OnInit {
+export class SginUpComponent implements OnInit, OnDestroy {
   paramsSub: Subscription;
   navSub: Subscription;
-  userId: string = 'user2';
-  tt: Observable<boolean>;
+  userId = 'user2';
   afterSin = false;
   constructor(
     private store: Store<AppState>,
@@ -30,12 +29,14 @@ export class SginUpComponent implements OnInit {
     userName: ''
   };
 
+  ngOnDestroy() {
+    this.navSub.unsubscribe();
+  }
   ngOnInit() {
     this.paramsSub = this.store.pipe(select(selectRouteParam, 'userId')).subscribe((data: string) => {
       this.userId = data;
     });
-    this.tt = this.store.pipe(select(areBothLooged));
-    this.navSub = this.tt.subscribe((data: boolean) => {
+    this.navSub = this.store.pipe(select(areBothLooged)).subscribe((data: boolean) => {
       if (this.afterSin) {
         const navroute = (data) ? ['game'] : ['auth'];
         this.route.navigate(navroute);
