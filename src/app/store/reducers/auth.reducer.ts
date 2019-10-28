@@ -1,8 +1,10 @@
 import { createReducer, on, Action, createSelector, createFeatureSelector, props } from '@ngrx/store';
 import * as authActions from '../auth.actions';
 import { AppState } from './reducers';
+import { Colors } from '../../modules/shared/shared-obj';
 export interface User {
     userName: string;
+    color?: Colors;
 }
 export interface UserLoginPayload {
     userName: string;
